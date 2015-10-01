@@ -1,0 +1,28 @@
+---
+- name: Creates src directory
+  file: path=/src state=directory owner=stack group=stack mode=0775
+
+- name: Clone the osprofiler repo
+  git: repo="https://github.com/sacharya/osprofiler.git"
+       dest="/src/osprofiler"
+       update=yes
+
+- name: Install profiler
+  shell: "cd /src/osprofiler; virtualenv venv; source venv/bin/activate; python setup.py install"
+
+- name: Copy the conf file
+  template: src=osprofiler.conf dest=/etc/osprofiler/osprofiler.conf
+
+- name: set facts for daemonn
+  set_fact:
+    user: stack
+    daemon: "/home/stack/ansible-osprofiler/venv/bin/python /src/osprofiler/osprofiler/profile.py"
+    pidfile: /var/run/osprofiler.pid
+    daemon_opts: ""
+    service_name: osprofilerd
+
+- name: Add osprofiler init.d daemon script
+  action: template src=init.d-template.j2 dest=/etc/init.d/osprofilerd owner=stack group=stack mode=0751
+
+- name: Ensure osprofiler daemon is started
+  action: service name=osprofiler state=started

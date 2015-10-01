@@ -1,0 +1,46 @@
+---
+osprofiler_system: 
+  prefix: somecloud
+  metrics: 
+    - network
+    - cpu
+    - memory
+  handlers: 
+    - blueflood
+  sample_interval: 5
+
+osprofiler_rabbit:
+  prefix: somecloud
+  auth:
+    username: "root"
+    password: "password"
+  handlers:
+    - elastic
+  sample_interval: 0.3
+
+osprofiler_process:
+  prefix: somecloud
+  filters:
+    - nova
+    - neutron
+    - cinder
+  metrics:
+    - memory
+    - cpu
+    - network
+  handlers:
+    - blueflood
+  sample_interval: 5
+
+osprofiler_blueflood:
+  batch_size: 1000
+  auth:
+    username: "root"
+    password: "password"
+    auth_url: "127.0.0.1"
+
+osprofiler_elastic:
+  host: 127.0.0.1
+  batch_size: 100
+  index_prefix: testcloud
+  index_type: event

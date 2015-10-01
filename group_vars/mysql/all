@@ -1,0 +1,11 @@
+---
+
+osprofiler_mysql:
+  prefix: somecloud
+  auth: 
+    username: "root"
+    password: "admin"
+  handlers:
+    - blueflood
+  sample_interval: 5
+

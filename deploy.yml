@@ -1,0 +1,7 @@
+---
+- name: install agent on nodes
+  hosts: all
+  gather_facts: true
+  user: root
+  roles:
+    - {role: install-osprofiler}

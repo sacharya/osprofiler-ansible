@@ -1,0 +1,10 @@
+---
+osprofiler_rabbit:
+  prefix: somecloud
+  auth:
+    username: "root"
+    password: "password"
+  handlers:
+    - elastic
+  sample_interval: 0.3
+
