@@ -36,8 +36,8 @@ osprofiler_blueflood:
   batch_size: 1000
   auth:
     username: "root"
-    password: "password"
-    auth_url: "127.0.0.1"
+    apikey: "apikey"
+    auth_url: "https://identity.api.rackspacecloud.com/v2.0/"
 
 osprofiler_elastic:
   host: 127.0.0.1
