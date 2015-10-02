@@ -84,7 +84,7 @@ agents:
 backend:
 
   {% if osprofiler_blueflood is defined -%}
-    - plugin: blueflood
+    - plugin: osprofiler.handlers.blueflood.BluefloodHandler
     name: "bluefood"
     batch_size: {{ osprofiler_blueflood.batch_size }}
     auth:
@@ -94,7 +94,7 @@ backend:
   {% endif %}
 
   {% if osprofiler_elastic is defined -%}
-    - plugin: elastic
+    - plugin: osprofiler.handlers.elastic.ElasticSearchHandler
     name: "elastic"
     host: {{ osprofiler_elastic.host }}
     batch_size: {{ osprofiler_elastic.batch_size }}

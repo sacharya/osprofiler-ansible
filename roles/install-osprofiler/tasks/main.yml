@@ -1,28 +1,66 @@
 ---
-- name: Creates src directory
-  file: path=/src state=directory owner=stack group=stack mode=0775
+- name: Create osprofiler system group
+  group:
+    name: "{{ osprofiler_system_user }}"
+    state: "present"
+    system: "yes"
+
+- name: Create osprofiler system user
+  user:
+    name: "{{ osprofiler_system_user }}"
+    group: "{{ osprofiler_system_user }}"
+    shell: "/bin/sh"
+    system: "yes"
+    createhome: "yes"
+    home: "/home/osprofiler"
+
+- name: Creates osprofiler directory
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ osprofiler_system_user }}"
+    group: "{{ osprofiler_system_user }}"
+    mode: 0775
+  with_items:
+    - { path: "/src" }
+    - { path: "/etc/osprofiler" }
+    - { path: "/var/log/osprofiler" }
+    - { path: "/var/run/osprofiler" }
 
 - name: Clone the osprofiler repo
-  git: repo="https://github.com/sacharya/osprofiler.git"
-       dest="/src/osprofiler"
-       update=yes
+  git:
+    repo: "https://github.com/sacharya/osprofiler.git"
+    dest: "/src/osprofiler"
+    update: yes
 
 - name: Install profiler
-  shell: "cd /src/osprofiler; virtualenv venv; source venv/bin/activate; python setup.py install"
+  shell: |
+    cd /src/osprofiler; pip install -r requiremnets; python setup.py install
 
-- name: Copy the conf file
-  template: src=osprofiler.conf dest=/etc/osprofiler/osprofiler.conf
-
-- name: set facts for daemonn
+- name: set facts for daemon
   set_fact:
-    user: stack
-    daemon: "/home/stack/ansible-osprofiler/venv/bin/python /src/osprofiler/osprofiler/profile.py"
+    user: "{{ osprofiler_system_user }}"
+    daemon: "/src/osprofiler/osprofiler/profile.py"
     pidfile: /var/run/osprofiler.pid
     daemon_opts: ""
     service_name: osprofilerd
 
-- name: Add osprofiler init.d daemon script
-  action: template src=init.d-template.j2 dest=/etc/init.d/osprofilerd owner=stack group=stack mode=0751
+- name: Copy the conf files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: 0751
+  with_items:
+    - src: osprofiler.conf.j2
+      dest: /etc/osprofiler/osprofiler.conf
+      owner: "{{ osprofiler_system_user }}"
+      group: "{{ osprofiler_system_user }}"
+    - src: init.d-template.j2
+      dest: /etc/init.d/osprofilerd
 
 - name: Ensure osprofiler daemon is started
-  action: service name=osprofiler state=started
+  service:
+    name: osprofilerd
+    state: started

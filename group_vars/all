@@ -1,4 +1,6 @@
 ---
+osprofiler_system_user: osprofiler
+
 osprofiler_system: 
   prefix: somecloud
   metrics: 
