@@ -85,7 +85,7 @@ backend:
 
   {% if osprofiler_blueflood is defined -%}
     - plugin: osprofiler.handlers.blueflood.BluefloodHandler
-    name: "bluefood"
+    name: "blueflood"
     batch_size: {{ osprofiler_blueflood.batch_size }}
     auth:
       username: {{ osprofiler_blueflood.auth.username }}

@@ -41,7 +41,7 @@
   set_fact:
     user: "{{ osprofiler_system_user }}"
     daemon: "/src/osprofiler/osprofiler/profile.py"
-    pidfile: /var/run/osprofiler.pid
+    pidfile: /var/run/osprofiler/osprofiler.pid
     daemon_opts: ""
     service_name: osprofilerd
 
