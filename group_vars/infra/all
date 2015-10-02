@@ -1,5 +1,5 @@
 ---
-osprofiler_rabbit:
+osprofiler_events:
   prefix: somecloud
   auth:
     username: "root"

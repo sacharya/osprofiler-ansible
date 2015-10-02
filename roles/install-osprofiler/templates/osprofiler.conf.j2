@@ -17,17 +17,17 @@ agents:
     {% endif %}
   {% endif %}
 
-  {% if osprofiler_rabbit is defined -%}
-    - plugin: osprofiler.plugins.rabbit.Rabbit
-    name: "rabbit"
-    prefix: {{ osprofiler_rabbit.prefix }}
-    sample_interval: {{ osprofiler_rabbit.sample_interval }}
+  {% if osprofiler_events is defined -%}
+    - plugin: osprofiler.plugins.events.Events
+    name: "events"
+    prefix: {{ osprofiler_events.prefix }}
+    sample_interval: {{ osprofiler_events.sample_interval }}
     auth:
-      username: {{ osprofiler_rabbit.auth.username }}
-      password: {{ osprofiler_rabbit.auth.password }}
-    {% if osprofiler_rabbit.handlers is defined -%}
+      username: {{ osprofiler_events.auth.username }}
+      password: {{ osprofiler_events.auth.password }}
+    {% if osprofiler_events.handlers is defined -%}
       handlers:
-        {% for handler in osprofiler_rabbit.handlers -%}
+        {% for handler in osprofiler_events.handlers -%}
           - {{ handler }}
         {% endfor %}
     {% endif %}
@@ -87,6 +87,7 @@ backend:
     - plugin: osprofiler.handlers.blueflood.BluefloodHandler
     name: "blueflood"
     batch_size: {{ osprofiler_blueflood.batch_size }}
+    workers: {{ osprofiler_blueflood.workers }}
     auth:
       username: {{ osprofiler_blueflood.auth.username }}
       apikey: {{ osprofiler_blueflood.auth.apikey }}
@@ -98,6 +99,7 @@ backend:
     name: "elastic"
     host: {{ osprofiler_elastic.host }}
     batch_size: {{ osprofiler_elastic.batch_size }}
+    workers: {{ osprofiler_elastic.workers }}
     index_prefix: {{ osprofiler_elastic.index_prefix }}
     index_type: {{ osprofiler_elastic.index_type }}
   {% endif %}

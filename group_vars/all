@@ -11,15 +11,6 @@ osprofiler_system:
     - blueflood
   sample_interval: 5
 
-osprofiler_rabbit:
-  prefix: somecloud
-  auth:
-    username: "root"
-    password: "password"
-  handlers:
-    - elastic
-  sample_interval: 0.3
-
 osprofiler_process:
   prefix: somecloud
   filters:
@@ -36,13 +27,15 @@ osprofiler_process:
 
 osprofiler_blueflood:
   batch_size: 1000
+  workers: 1
   auth:
-    username: "root"
+    username: "username"
     apikey: "apikey"
     auth_url: "https://identity.api.rackspacecloud.com/v2.0/"
 
 osprofiler_elastic:
   host: 127.0.0.1
   batch_size: 100
+  workers: 1
   index_prefix: testcloud
   index_type: event
