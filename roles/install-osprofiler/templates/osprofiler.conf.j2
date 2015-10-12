@@ -5,10 +5,11 @@ agents:
     - plugin: osprofiler.plugins.mysql.Mysql
     name: "mysql"
     prefix: {{ osprofiler_mysql.prefix }}
-    auth:
-      username: {{ osprofiler_mysql.auth.username }}
-      password: {{ osprofiler_mysql.auth.password }}
     sample_interval: {{ osprofiler_mysql.sample_interval }}
+    auth:
+      defaults-file: {{ osprofiler_mysql.auth['defaults-file'] }}
+      host: 127.0.0.1
+      port: 3306
     {% if osprofiler_system.handlers is defined -%}
       handlers:
         {% for handler in osprofiler_mysql.handlers -%}
