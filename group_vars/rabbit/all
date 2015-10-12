@@ -11,3 +11,13 @@ osprofiler_rabbit:
     - blueflood
   sample_interval: 5
 
+osprofiler_events:
+  prefix: somecloud
+  auth:
+    host: 127.0.0.1
+    port: 15672
+    username: "guest"
+    password: "guest"
+  handlers:
+    - elastic
+  sample_interval: 0.3
