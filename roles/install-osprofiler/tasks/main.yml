@@ -40,10 +40,10 @@
 - name: set facts for daemon
   set_fact:
     user: "{{ osprofiler_system_user }}"
-    daemon: "/src/osprofiler/osprofiler/profile.py"
-    pidfile: /var/run/osprofiler/osprofiler.pid
-    daemon_opts: ""
-    service_name: osprofilerd
+    daemon: "/usr/bin/python"
+    pidfile: "/var/run/osprofiler/osprofiler.pid"
+    daemon_opts: "/src/osprofiler/osprofiler/profile.py"
+    service_name: osprofiler
 
 - name: Copy the conf files
   template:
@@ -58,9 +58,9 @@
       owner: "{{ osprofiler_system_user }}"
       group: "{{ osprofiler_system_user }}"
     - src: init.d-template.j2
-      dest: /etc/init.d/osprofilerd
+      dest: /etc/init.d/osprofiler
 
 - name: Ensure osprofiler daemon is started
   service:
-    name: osprofilerd
+    name: osprofiler
     state: started
