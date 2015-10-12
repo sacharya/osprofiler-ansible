@@ -35,7 +35,7 @@
 
 - name: Install profiler
   shell: |
-    cd /src/osprofiler; pip install -r requiremnets; python setup.py install
+    cd /src/osprofiler; pip install -r requirements; python setup.py install
 
 - name: set facts for daemon
   set_fact:
