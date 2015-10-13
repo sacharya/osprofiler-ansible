@@ -59,6 +59,8 @@
       group: "{{ osprofiler_system_user }}"
     - src: init.d-template.j2
       dest: /etc/init.d/osprofiler
+  notify:
+    - restart osprofiler
 
 - name: Ensure osprofiler daemon is started
   service:
