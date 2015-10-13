@@ -46,7 +46,7 @@
 - name: set facts for daemon
   set_fact:
     user: "{{ osprofiler_system_user }}"
-    daemon: "/usr/bin/python"
+    daemon: "/src/osprofiler/venv/bin/python"
     pidfile: "/var/run/osprofiler/osprofiler.pid"
     daemon_opts: "/src/osprofiler/osprofiler/profile.py"
     service_name: osprofiler
