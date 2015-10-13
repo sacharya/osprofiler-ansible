@@ -33,9 +33,15 @@
     dest: "/src/osprofiler"
     update: yes
 
+- name: Install virtual env
+  pip: name=virtualenv 
+
+- name: Install requirememnts
+  pip: requirements="/src/osprofiler/requirements.txt" virtualenv="/src/osprofiler/venv"
+
 - name: Install profiler
   shell: |
-    cd /src/osprofiler; pip install -r requirements.txt; python setup.py install
+    cd /src/osprofiler; venv/bin/python setup.py install
 
 - name: set facts for daemon
   set_fact:
@@ -63,6 +69,4 @@
     - restart osprofiler
 
 - name: Ensure osprofiler daemon is started
-  service:
-    name: osprofiler
-    state: started
+  command: service osprofiler restart
