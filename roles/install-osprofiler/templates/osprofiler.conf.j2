@@ -27,6 +27,8 @@ agents:
     auth:
       username: {{ osprofiler_rabbit.auth.username }}
       password: {{ osprofiler_rabbit.auth.password }}
+      host: {{ osprofiler_rabbit.auth.host }}
+      host: {{ osprofiler_rabbit.auth.host }}
     {% if osprofiler_rabbit.handlers is defined -%}
       handlers:
         {% for handler in osprofiler_rabbit.handlers -%}
