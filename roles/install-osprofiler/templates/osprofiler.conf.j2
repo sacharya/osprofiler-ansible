@@ -19,6 +19,22 @@ agents:
     {% endif %}
   {% endif %}
 
+  {% if osprofiler_rabbit is defined -%}
+    - plugin: osprofiler.plugins.rabbit.Rabbit
+    name: "rabbit"
+    prefix: {{ osprofiler_rabbit.prefix }}
+    sample_interval: {{ osprofiler_rabbit.sample_interval }}
+    auth:
+      username: {{ osprofiler_rabbit.auth.username }}
+      password: {{ osprofiler_rabbit.auth.password }}
+    {% if osprofiler_rabbit.handlers is defined -%}
+      handlers:
+        {% for handler in osprofiler_rabbit.handlers -%}
+          - {{ handler }}
+        {% endfor %}
+    {% endif %}
+  {% endif %}
+
   {% if osprofiler_events is defined -%}
     - plugin: osprofiler.plugins.events.Events
     name: "events"
