@@ -112,6 +112,7 @@ backend:
       username: {{ osprofiler_blueflood.auth.username }}
       apikey: {{ osprofiler_blueflood.auth.apikey }}
       auth_url: {{ osprofiler_blueflood.auth.auth_url }}
+      ingest_url: {{ osprofiler_blueflood.auth.ingest_url }}
   {% endif %}
 
   {% if osprofiler_elastic is defined -%}
