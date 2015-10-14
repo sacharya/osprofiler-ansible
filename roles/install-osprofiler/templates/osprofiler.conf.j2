@@ -7,9 +7,10 @@ agents:
     prefix: {{ osprofiler_mysql.prefix }}
     sample_interval: {{ osprofiler_mysql.sample_interval }}
     auth:
-      defaults-file: {{ osprofiler_mysql.auth['defaults-file'] }}
-      host: 127.0.0.1
-      port: 3306
+      username: {{ osprofiler_mysql.auth.username }}
+      password: {{ osprofiler_mysql.auth.password }}
+      host: {{ osprofiler_mysql.auth.host }}
+      port: {{ osprofiler_mysql.auth.port }}
     {% if osprofiler_system.handlers is defined -%}
       handlers:
         {% for handler in osprofiler_mysql.handlers -%}
